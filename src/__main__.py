@@ -30,7 +30,6 @@ def plot(db,df):
         plt.plot(xy['latitude'], xy['longitude'], 'o', markerfacecolor=tuple(col),
                  markeredgecolor='k', markersize=6)
 
-    plt.savefig('scatter.png')
 
 
 
@@ -38,13 +37,16 @@ def main(file):
     df = pd.read_csv(file, header=0,
                      dtype={"latitude": np.float, "longitude": np.float})
     coords = df[['latitude', 'longitude']]
-    db = DBSCAN(eps=0.18/6371., min_samples=5, algorithm='ball_tree', metric='haversine').fit(np.radians(coords))
-    cluster_labels = db.labels_
-    plot(db,coords)
-    num_clusters = len(set(cluster_labels))
-    clusters = pd.Series([coords[cluster_labels == n] for n in range(num_clusters)])
-    print('Number of clusters: {}'.format(num_clusters))
-    print(clusters)
+    for i in range(8, 21):
+        db = DBSCAN(eps=i/637100., min_samples=5, algorithm='ball_tree', metric='haversine').fit(np.radians(coords))
+        # cluster_labels = db.labels_
+        plt.close()
+        plot(db,coords)
+        plt.savefig(f'scatter{i}.png')
+    # num_clusters = len(set(cluster_labels))
+    # clusters = pd.Series([coords[cluster_labels == n] for n in range(num_clusters)])
+    # print('Number of clusters: {}'.format(num_clusters))
+    # print(clusters)
 
 
 if __name__ == '__main__':
