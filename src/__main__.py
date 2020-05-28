@@ -3,12 +3,13 @@ import sys
 import src.kmeans as km
 import pandas as pd
 import numpy as np
-from sklearn.cluster import DBSCAN
+from sklearn.cluster import DBSCAN, KMeans
+from sklearn.neighbors import NearestNeighbors
 import math as mt
 import matplotlib.pyplot as plt
 
 
-def plot(db,df):
+def plot(db, df):
     labels = db.labels_
     unique_labels = set(labels)
     core_samples_mask = np.zeros_like(db.labels_, dtype=bool)
@@ -31,18 +32,20 @@ def plot(db,df):
                  markeredgecolor='k', markersize=6)
 
 
-
-
 def main(file):
     df = pd.read_csv(file, header=0,
                      dtype={"latitude": np.float, "longitude": np.float})
     coords = df[['latitude', 'longitude']]
+    nbrs = KMeans(n_clusters=10).fit_predict(coords)
+    plt.scatter(coords['latitude'], coords['longitude'], c=nbrs)
+    plt.savefig('kmenas.png')
+    """
     for i in range(8, 21):
         db = DBSCAN(eps=i/637100., min_samples=5, algorithm='ball_tree', metric='haversine').fit(np.radians(coords))
         # cluster_labels = db.labels_
         plt.close()
         plot(db,coords)
-        plt.savefig(f'scatter{i}.png')
+        plt.savefig(f'scatter{i}.png')"""
     # num_clusters = len(set(cluster_labels))
     # clusters = pd.Series([coords[cluster_labels == n] for n in range(num_clusters)])
     # print('Number of clusters: {}'.format(num_clusters))
