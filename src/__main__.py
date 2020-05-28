@@ -6,9 +6,11 @@ import pandas as pd
 
 def main(file):
     df = pd.read_csv(file, names=["type", "nb", "reviews", "sat", "acc", "bed", "price", "lat", "lon"])
-    rows = [km.Point(x[-2], x[-1]) for x in df]
-    print(rows)
+    iter_r = df.iterrows()
+    next(iter_r)
+    rows = [km.Point(x['lat'], x['lon']) for i, x in iter_r]
     print(km.kclusters(rows, kcentroid=8))
+
 
 
 if __name__ == '__main__':
