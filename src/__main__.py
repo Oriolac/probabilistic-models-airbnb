@@ -25,11 +25,13 @@ def parse_arguments():
     for arg in ['price', 'reviews', 'latitude', 'longitude']:
         parser.add_argument(f'-{arg[:3]}', f'--nquartile-{arg}', dest=f'{arg}q',
                             type=int, default=4, help=f'Number of quartiles for {arg}')
+        parser.add_argument(f'-c{arg[:3]}', f'--categorize-function-{arg}', dest=f'c{arg}', 
+                            action='store_const', const=pd.cut, default=pd.qcut,
+                            help='Changes function to categorize continues'
+                            f'values in column {arg}')
     parser.add_argument('-n', '--relation-name', dest='name',
                         type=str, default='airbnb', help='Name of the relation in the file')
     parser.add_argument('-s', '--seed', dest='seed', type=int, default=0o4011,
-                        help='Seed to be used for spliting data')
-    parser.add_argument('-c', '--categorize', dest='categorize', choices=CAT_MAP.keys(), default='qcut',
                         help='Seed to be used for spliting data')
     return parser.parse_args()
 
@@ -37,10 +39,10 @@ def parse_arguments():
 def main():
     args = parse_arguments()
     df = pd.read_csv(args.inputfile, header=0)
-    categorize(df, 'price', args.priceq, CAT_MAP[args.categorize])
-    categorize(df, 'reviews', args.reviewsq, CAT_MAP[args.categorize])
-    categorize(df, 'latitude', args.latitudeq, CAT_MAP[args.categorize])
-    categorize(df, 'longitude', args.longitudeq, CAT_MAP[args.categorize])
+    categorize(df, 'price', args.priceq, args.cprice)
+    categorize(df, 'reviews', args.reviewsq, args.creviews)
+    categorize(df, 'latitude', args.latitudeq, args.clatitude)
+    categorize(df, 'longitude', args.longitudeq, args.clongitude)
 
     train, test = parse_weka(df, args.name, args.seed)
     print(train, file=open(args.trainfile, 'w'))
