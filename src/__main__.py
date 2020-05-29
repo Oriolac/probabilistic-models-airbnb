@@ -26,7 +26,7 @@ def parse_arguments():
         parser.add_argument(f'-{arg[:3]}', f'--nquartile-{arg}', dest=f'{arg}q',
                             type=int, default=4, help=f'Number of quartiles for {arg}')
         parser.add_argument(f'-c{arg[:3]}', f'--categorize-function-{arg}', dest=f'c{arg}', 
-                            action='store_const', const=pd.cut, default=pd.qcut,
+                            action='store_const', const=pd.qcut, default=pd.cut,
                             help='Changes function to categorize continues'
                             f'values in column {arg}')
     parser.add_argument('-n', '--relation-name', dest='name',
