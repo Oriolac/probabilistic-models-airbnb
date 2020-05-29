@@ -2,9 +2,9 @@ import pandas as pd
 
 
 
-def categorize(dataframe, column, number_quantiles, cat_func):
+def categorize(dataframe, column, number_divisions, cat_func):
     dataframe[column] = cat_func(dataframe[column],
-                                number_quantiles, labels=False)
+            number_divisions, labels=False)
 
 
 def parse_weka(df, relation_name, seed):
