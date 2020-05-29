@@ -44,8 +44,8 @@ def main(infile, outfile):
     categorize_dataframe_nquartiles(df, 'latitude', 4)
     categorize_dataframe_nquartiles(df, 'longitude', 4)
 
-    res = parse_weka(df.head(), "airbnb")
-    with open(outfile) as out:
+    res = parse_weka(df, "airbnb")
+    with open(outfile, 'w') as out:
         print(res, file=out)
 
 
