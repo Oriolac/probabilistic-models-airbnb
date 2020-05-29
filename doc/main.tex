@@ -3,6 +3,7 @@
 
 \usepackage{latexsym}
 \usepackage{float}
+\usepackage[titletoc]{appendix}
 \usepackage[utf8]{inputenc}
 \usepackage[catalan]{babel}
 % \usepackage[english]{babel}
@@ -25,6 +26,7 @@
 \usepackage{listings}
 \usepackage{hyperref}
 \usepackage{vmargin}
+\usepackage{subfigure}
 \usepackage{wrapfig}
 \usepackage{subfiles}
 \usepackage{float}
@@ -132,8 +134,8 @@ Grau en Enginyeria Informàtica
 \tableofcontents
 \thispagestyle{empty} 
 %\newpage
-\listoffigures
 \listoftables
+\listoffigures
 \thispagestyle{empty}
 \newpage
 
@@ -146,6 +148,8 @@ Grau en Enginyeria Informàtica
 \subfile{partition/partition.tex}
 \section{Models}
 \subfile{models/models.tex}
-
-
+\newpage\appendix
+\section{Gràfics}
+\label{app:grafics}
+\subfile{annex/graphs.tex}
 \end{document}
