@@ -2,7 +2,6 @@ import sys
 
 import pandas as pd
 import numpy as np
-from sklearn.cluster import DBSCAN
 import math as mt
 import matplotlib.pyplot as plt
 
