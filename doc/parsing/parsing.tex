@@ -1,7 +1,93 @@
 \begin{document}
-
-%TODO El que quiera obtener una nota superior al 8.5, deberá de explicar con detalle de que forma ha escogido el tamaño de los conjuntos discretos de valores para transformar los atributos de entrada con valores reales. Y explicar si habéis probado con diferentes tamaños, y con que tamaños os habéis quedado finalmente (y el motivo).
-
-
+% Es divideix en dos fitxers a src, __main__.py que parseja les dades
+% weka.py -> te funcions per a categoritzar les dades i per a crear els fitxers
+% argparser es el notre amic
+% explicar tots els tipus de paràmetres que podem passar
+% explicar el cut i el qcut
+% df[column_name] = pd.qcut(df[columnname], q=4, labels=False)
+% utilitzem sample i drop per a crear els dos datasets 
 %% Les dues funcions pandas.cut i pandas.qcut
+El parseig de les dades es realitza en dos fitxers continguts en \texttt{src}:
+\begin{itemize}
+	\item \verb|__main__.py| conte la funció \texttt{main} i funcions de parseig dels
+	arguments passats per la línia de comandes.
+	\item \texttt{weka.py} conte funcions auxiliars per a categoritzar les dades i per a crear els
+	texts que amb format arff per a weka.
+\end{itemize}
+\subsection{Linia de comandes}
+Per a parsejar les dades passades per la línia d'ordres, donat que el projecte semblava
+requerir bastants arguments, s'ha utilitzat el mòdul estàndard d'\texttt{argparser}. Aquest
+ens permetia posar arguments opcionals per a ser utilitzats en el parseig. Així doncs, els
+diferents arguments que es poden passar són:
+\begin{itemize}
+	\item \texttt{input-file, train-file, test-file} són els arguments requerits per l'enunciat de la pràctica.
+		Input file és l'únic fitxer que ha d'estar creat amb anterioritat i ha de contindre un csv amb els
+		valors que es volen parsejar. 
+	\item \texttt{pri, rev, lat, lon}: són diferents paràmetres que permeten canviar el nombre de particions en els arguments \textit{price, reviews, latitude i longitude} respectivament. Per a
+	canviar el valor, s'ha d'especificar un enter després del parametre, per exemple:
+	\verb|python3 -m src ... -pri 3|.\\
+	Aquests paràmetres han servit per a provar diferents valors en com partir les dades pel weka.
+	En la següent secció s'explicarà de quina manera s'ha realitzat i el perquè d'aquesta.
+	\item \texttt{cpri, crev, clat, clon}: Dins de les maneres que es poden dividir en classificacions 
+	diferents dades contínues, hi ha dues formes que destaquen: fer la divisió per centils o realitzar-la
+	amb rangs de valors de la mateixa mida. La diferència de realitzar-la per quantils és que tots
+	els rangs tindran el mateix nombre de valors\footnote{Realment, si la divisió per quartils no
+	és exacta, un conjunt podria tenir menys valors, és a dir, si es divideix entre quatre conjunts un
+	conjunt de 13 valors, llavors un d'aquests inevitablement tindrà un valor de més.}. Però, dividir-la
+	així pot deixar en un mateix rang valors forans i valors normals, és a dir, si es dividís en dos
+	grups la llista [2, 3, 4, 2000], 4 i 2000 aniran al mateix grup quan aparentment tenen poc sentit
+	que ho siguin. Amb aquest paràmetre permetem en executar l'script, canviar la funció de tall
+	d'un tall per rangs amb la mateixa mida als creats a partir de quartils.
+	\item \texttt{name}: permet canviar el nom de la relació amb què es guarda. S'ha d'especificar
+	en el paràmetre: \verb|python3 -m src ... -n notmydataset|.
+	\item \texttt{seed}: permet canviar la llavor en la qual s'agafen els valors per a fer els dos
+	datasets (train i test). Si no s'especifica, s'agafa el valor per defecte dels últims 5 dígits d'un
+	dels autors de la pràctica, com s'especificava a l'enunciat.
+\end{itemize}
+ Dins d'aquest codi s'utilitzen dos funcions:
+ \begin{itemize}
+ 	\item \texttt{ArgumentParser}: constructor de la classe. Ens permet crear un parser on l'hi
+ 	podem atribuir una descripció que s'utilitzarà amb el paràmetre \textit{help} opcional.
+ 	
+ 	\item \verb|add_argument|: ens permet afegir un argument. Si comença amb el caràcter
+ 	'-', serà opcional, i es podrà especificar un nom verbós, com per exemple \texttt{-n} i
+ 	\texttt{--name} realitzen la mateixa funció. Aquest mètode accepta diferents tipus de 
+ 	paràmetres per a canviar el seu comportament. A continuació s'expliquen els que s'han utilitzat
+ 	en aquesta:
+ 		\begin{itemize}
+ 			\item \texttt{metavar}: especifica una variable que s'utilitzarà per a mostrar el missatge
+ 			d'ajuda per a paràmetres no opcionals.
+ 			
+ 			\item \texttt{type}: ens permet especificar com s'ha de parsejar els valors per a poder
+ 			ser utilitzats en el codi. En el nostre cas, només s'utilitza \texttt{str} i \texttt{int}.
+ 			
+ 			\item \texttt{help}: proporciona un text d'ajuda quan es realitza la comanda \texttt{--help}.
+ 			
+ 			\item \texttt{dest}: variable amb la que serà guardada en el parseig.
+ 			
+ 			\item \texttt{action}: especifica una acció per a realitzar. Només s'ha utilitzat per a 
+ 			guardar una constant \textit{'store\_const'}.
+ 		
+ 			\item \texttt{const}: especificar la constant a guarda quan s'utilitza \verb|'store_const'|.
+ 			Amb conjunció amb el valor \texttt{default} i amb \texttt{action}, ens permet canviar 
+ 			la funció a utilitzar pel tall.
+ 		\end{itemize}
+ \end{itemize}
+\subsection{Weka i pandas}
+	Per a realitzar la funció de parseig s'ha utilitzat pandas. Per a fer-ho, s'ha utilitzat la funció
+	\verb|read_csv|.  A partir d'aquí, la manipulació de dades s'ha realitzat amb conjunció amb 
+	numpy. Així doncs, per a realitzar la discretització de les dades contínues, s'ha utilitzat les
+	funcions \texttt{qcut} i \texttt{cut}, la primera fent-ho amb quartils. Aquestes dues funcions
+	accepten els mateixos paràmetres, perquè el canvi es pot realitzar fluidament. A més a més
+	per a fer el canvi d'una columna continua, es pot realitzar amb:
+	\verb|df[column_name] = cut_func(df[column], number_divisions, labels=False)|. 
+	\textit{Labels} permet canviar el nom en el qual es categoritzen, passant dels rangs a noms
+	donats com a llista. Per facilitar el parseig, s'ha passat el valor \texttt{False}, que canvia simplement numera les instàncies. \\
+	\\
+	A més a més, s'ha realitzat la funció de \verb|parse_weka|, que retorna una \texttt{str} 
+	representant la informació d'arff. S'ha retornat el valor en comptes de guardar-lo directament
+	en el fitxer per separar la lògica d'on i que es guarda. La funció en si és una agrupació de 
+	\texttt{join} de les files i columnes per les diferents línies. La divisió dels datasets es realitza
+	en la mateixa funció per assegurar que els dos sempre tindran el mateix nom a la relació i els
+	atributs.
 \end{document}

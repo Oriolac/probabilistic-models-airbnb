@@ -6,11 +6,11 @@ import argparse
 
 from src.weka import categorize, parse_weka
 
-CAT_MAP = {'qcut': pd.qcut,
-           'cut': pd.cut}
-
-
 def parse_arguments():
+    """
+        Parse comand line arguments. To know more about the arguments, use
+        python3 -m src --help
+    """
     parser = argparse.ArgumentParser(description='Parses parameters for '
                                                  'tranforming the csv to an arff file')
     parser.add_argument('inputfile', metavar='input-file', type=str,
