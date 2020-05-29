@@ -61,8 +61,8 @@ def parse_arguments():
             type=int, default=4, help=f'Number of quartiles for {arg}')
     parser.add_argument('-n', '--relation-name', dest='name',
             type=str, default='airbnb', help='Name of the relation in the file')
-    parser.add_argument('-s', '--seed', dest='seed', type=int, default=2104011, 
-        help='Seed to be used for spliting data')
+    parser.add_argument('-s', '--seed', dest='seed', type=int, default=0o4011,
+                        help='Seed to be used for spliting data')
     return parser.parse_args()
 
 
