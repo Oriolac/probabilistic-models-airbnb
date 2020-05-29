@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import math as mt
 import matplotlib.pyplot as plt
+import argparse
 
 
 def categorize_dataframe_nquartiles(dataframe, column, number_quantiles):
@@ -28,15 +29,19 @@ def parse_weka(df, relation_name):
     res = f"@RELATION {relation_name}\n\n"
 
     res += '\n'.join(f'@ATTRIBUTE {col} ' + '{' +
-            ','.join(map(str, df[col].unique()))
+            ','.join(f"'{str(x)}'" for x in df[col].unique())
             + '}' for col in df.columns)
 
     res += '\n\n@DATA\n'
-    res += '\n'.join(','.join(map(str, row)) for row in df.values)
+    res += '\n'.join(','.join(f"'{str(x)}'" for x in row) for row in df.values)
     return res
+
+def parse_arguments():
+    return 0
 
 
 def main(infile, outfile):
+    args = parse_arguments()
     df = pd.read_csv(infile, header=0)
     categorize_dataframe_nquartiles(df, 'price', 4)
     categorize_dataframe_nquartiles(df, 'reviews', 4)
