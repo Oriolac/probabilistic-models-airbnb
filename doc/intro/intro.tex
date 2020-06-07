@@ -1,4 +1,10 @@
 \begin{document}
-En el present document, s'explicaran els passos seguits per al desenvolupament de les diferents parts de la pràctica de models probabilístics, utilitzant l'eina "weka".\\\\
-Els objectius principals que s'han volgut assolir, han sigut bàsicament tres: parsejar les dades donades de tal manera que weka pogués llegir-les, crear diferents models (amb diferents característiques) i estudiar-los i, finalment, l'explicació de com s'han escollit els conjunts discrets de valors per a transformar els atributs d'entrada en valors reals. 
+En el present document, s'explicaran els passos seguits per al desenvolupament de les diferents parts de la pràctica de models probabilístics, utilitzant l'eina \texttt{weka}.\\\\
+Els objectius principals que s'han volgut assolir, han sigut bàsicament tres: parsejar les dades donades de tal manera que weka pogués llegir-les, crear diferents models de tres tipus diferents: 
+\begin{enumerate}
+	\item Xarxa bayesiana obtinguda amb K2 amb el paràmetre $u=3$, sent aquest el nombre màxim de pares per variable.
+	\item Naive Bayes sent la variable independent \texttt{overall\_satisfaction} i amb $u=0$.
+	\item Naive Bayes amb la mateixa variable independent que la classe 2, però sent $u=3$.
+\end{enumerate}
+D'aquests, s'havien de veure el millor de 10 exemples\footnote{En cas que es puguin tenir més de 10. En el cas de la classe 2, no es poden realitzar 10 exemples, ja que és cas únic.}, i, finalment, l'explicació de com s'han escollit els conjunts discrets de valors per a transformar els atributs d'entrada en valors reals. 
 \end{document}

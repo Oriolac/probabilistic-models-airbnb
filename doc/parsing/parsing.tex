@@ -43,7 +43,7 @@ diferents arguments que es poden passar són:
 	en el paràmetre: \verb|python3 -m src ... -n notmydataset|.
 	\item \texttt{seed}: permet canviar la llavor en la qual s'agafen els valors per a fer els dos
 	datasets (\textit{train} i \textit{test}). Si no s'especifica, s'agafa el valor per defecte 
-	dels últims 5 dígits d'un dels autors de la pràctica, com s'especificava a l'enunciat.
+	dels últims 5 dígits d'un dels autors de la pràctica, com s'especificava a l'enunciat\footnote{Hem agafat els dígits 04011 de Sergi Simón, no són els últims 5 per un error.}.
 \end{itemize}
  Dins d'aquest codi s'utilitzen dos funcions:
  \begin{itemize}
@@ -74,6 +74,9 @@ diferents arguments que es poden passar són:
  			la funció a utilitzar pel tall.
  		\end{itemize}
  \end{itemize}
+A l'hora de crear els diferents archius ARFF pel training set i 
+
+
 \subsection{Weka i pandas}
 	Per a realitzar la funció de parseig s'ha utilitzat \texttt{pandas}. Per a fer-ho, s'ha usat la funció
 	\verb|read_csv|.  A partir d'aquí, la manipulació de dades s'ha realitzat amb conjunció amb 
