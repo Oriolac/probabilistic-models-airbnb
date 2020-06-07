@@ -1,14 +1,19 @@
-import pandas as pd
-
-
 
 def categorize(dataframe, column, number_divisions, cat_func):
+    """
+        Changes a column of a Dataframe categorizing its data.
+        :param dataframe: pandas.Dataframe -> Dataframe to be categorized
+        :param column: column name of the header, column that must be categorized
+        :param number_divisions: Length of the set range of divisions
+        :param cat_func: partition function that has to return a column of categorized data.
+        :return:
+    """
     dataframe[column] = cat_func(dataframe[column],
-            number_divisions, labels=False)
+                                 number_divisions, labels=False)
 
 
 def parse_weka(df, relation_name, seed):
-    '''
+    """
         Parses a pandas.DataFrame to weka format, independently
         from the weka format. All attributes must be categorized
         before this function.
@@ -21,7 +26,7 @@ def parse_weka(df, relation_name, seed):
 
         :return string with weka format-like. With this it's
         straight-forward to save it in a file.
-    '''
+    """
 
     def sample_arff(prefix, sample):
         res = prefix + '\n\n@DATA\n'

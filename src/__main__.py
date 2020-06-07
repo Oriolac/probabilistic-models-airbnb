@@ -6,6 +6,7 @@ import argparse
 
 from src.weka import categorize, parse_weka
 
+
 def parse_arguments():
     """
         Parse comand line arguments. To know more about the arguments, use
@@ -25,10 +26,10 @@ def parse_arguments():
     for arg in ['price', 'reviews', 'latitude', 'longitude']:
         parser.add_argument(f'-{arg[:3]}', f'--nquartile-{arg}', dest=f'{arg}q',
                             type=int, default=4, help=f'Number of quartiles for {arg}')
-        parser.add_argument(f'-c{arg[:3]}', f'--categorize-function-{arg}', dest=f'c{arg}', 
+        parser.add_argument(f'-c{arg[:3]}', f'--categorize-function-{arg}', dest=f'c{arg}',
                             action='store_const', const=pd.qcut, default=pd.cut,
                             help='Changes function to categorize continues'
-                            f'values in column {arg}')
+                                 f'values in column {arg}')
     parser.add_argument('-n', '--relation-name', dest='name',
                         type=str, default='airbnb', help='Name of the relation in the file')
     parser.add_argument('-s', '--seed', dest='seed', type=int, default=0o4011,
@@ -36,7 +37,23 @@ def parse_arguments():
     return parser.parse_args()
 
 
+def write_dataset(args, test, train):
+    """
+    Writes the training set and the test set in two different files.
+    :param args:
+    :param test:
+    :param train:
+    :return:
+    """
+    print(train, file=open(args.trainfile, 'w'))
+    print(test, file=open(args.testfile, 'w'))
+
+
 def main():
+    """
+    Main function of the program
+    :return: None
+    """
     args = parse_arguments()
     df = pd.read_csv(args.inputfile, header=0)
     categorize(df, 'price', args.priceq, args.cprice)
@@ -45,8 +62,7 @@ def main():
     categorize(df, 'longitude', args.longitudeq, args.clongitude)
 
     train, test = parse_weka(df, args.name, args.seed)
-    print(train, file=open(args.trainfile, 'w'))
-    print(test, file=open(args.testfile, 'w'))
+    write_dataset(args, test, train)
 
 
 if __name__ == '__main__':
