@@ -1,4 +1,3 @@
-
 def categorize(dataframe, column, number_divisions, cat_func):
     """
         Changes a column of a Dataframe categorizing its data.
@@ -28,17 +27,54 @@ def parse_weka(df, relation_name, seed):
         straight-forward to save it in a file.
     """
 
-    def sample_arff(prefix, sample):
-        res = prefix + '\n\n@DATA\n'
-        res += '\n'.join(','.join(f"'{str(x)}'" for x in row)
-                         for row in sample.values)
-        return res
+    prefix = create_prefix(df, relation_name)
+    train = get_training(df, seed)
+    test = get_test(df, train)
+    return sample_arff(prefix, train), sample_arff(prefix, test)
 
+
+def sample_arff(prefix, sample):
+    """
+    Creates the str of an ARFF file whith the relation information and its data.
+    :param prefix: str which has to be at the beginning of the file
+    :param sample: A Dataframe that can be the training set or the test set.
+    :return: str which has to be in the ARFF file.
+    """
+    res = prefix + '\n\n@DATA\n'
+    res += '\n'.join(','.join(f"'{str(x)}'" for x in row)
+                     for row in sample.values)
+    return res
+
+
+def create_prefix(df, relation_name):
+    """
+    Creates the prefix of the dataset: name of the relation and all of the atributes.
+    :param df: Dataset
+    :param relation_name: Name of the relation
+    :return: The prefix str which must be at the beginning of the ARFF file.
+    """
     prefix = f"@RELATION {relation_name}\n\n"
-
     prefix += '\n'.join(f'@ATTRIBUTE {col} ' + '{' +
                         ','.join(f"'{str(x)}'" for x in df[col].unique())
                         + '}' for col in df.columns)
-    train = df.sample(frac=0.75, random_state=seed)
-    test = df.drop(train.index)
-    return sample_arff(prefix, train), sample_arff(prefix, test)
+    return prefix
+
+
+def get_test(df, train):
+    """
+    Get the Dataframe Test
+    :param df: Dataframe which has all the dataset, the training and test data.
+    :param train: Dataframe which has the training dataset.
+    :return: Dataframe difference from the training and all the dataset.
+    """
+    return df.drop(train.index)
+
+
+def get_training(df, seed):
+    """
+    Return a DataFrame which contains the training set.
+    :param df: Dataframe which has all the dataset, the training and test data.
+    :param seed: Used for randomly split the Dataframe df for a seed
+    :return: the training Dataframe
+    """
+    return df.sample(frac=0.75, random_state=seed)
