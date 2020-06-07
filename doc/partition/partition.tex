@@ -31,5 +31,10 @@ El mètode de cada atribut realitzat es pot veure a la Taula \ref{tab:part}. Com
 \caption{Mètodes de partició utilitzats segons cada atribut}
 \label{tab:part}
 \end{table}
+Per tant, a l'hora de crear els diferents arxius ARFF pel training set i test set, la comanda emprada ha estat:
+\texttt{
+python3 -m src barca.csv trainset.arff testset.arff -pri 15 -rev 10 -lat 20 -lon 20
+}
+
 
 \end{document}
