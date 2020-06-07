@@ -10,8 +10,8 @@
 El parseig de les dades es realitza en dos fitxers continguts en \texttt{src}:
 \begin{itemize}
 	\item \verb|__main__.py| conte la funció \texttt{main} i funcions de parseig dels
-	arguments passats per la línia de comandes.
-	\item \texttt{weka.py} conte funcions auxiliars per a categoritzar les dades i per a crear els
+	arguments passats per la línia d'ordres.
+	\item \texttt{weka.py} conté funcions auxiliars per a categoritzar les dades i per a crear els
 	texts que amb format arff per a weka.
 \end{itemize}
 \subsection{Linia de comandes}
@@ -21,12 +21,13 @@ ens permetia posar arguments opcionals per a ser utilitzats en el parseig. Així
 diferents arguments que es poden passar són:
 \begin{itemize}
 	\item \texttt{input-file, train-file, test-file} són els arguments requerits per l'enunciat de la pràctica.
-		Input file és l'únic fitxer que ha d'estar creat amb anterioritat i ha de contindre un csv amb els
-		valors que es volen parsejar. 
+		\textit{Input file} és l'únic fitxer que ha d'estar creat amb anterioritat i ha de contenir un 
+		csv amb els valors que es volen parsejar. 
 	\item \texttt{pri, rev, lat, lon}: són diferents paràmetres que permeten canviar el nombre de particions en els arguments \textit{price, reviews, latitude i longitude} respectivament. Per a
-	canviar el valor, s'ha d'especificar un enter després del parametre, per exemple:
+	canviar el valor, s'ha d'especificar un enter després del paràmetre, per exemple:
 	\verb|python3 -m src ... -pri 3|.\\
-	Aquests paràmetres han servit per a provar diferents valors en com partir les dades pel weka.
+	\\
+	Aquests paràmetres han servit per a provar diferents valors en com partir les dades pel Weka.
 	En la següent secció s'explicarà de quina manera s'ha realitzat i el perquè d'aquesta.
 	\item \texttt{cpri, crev, clat, clon}: Dins de les maneres que es poden dividir en classificacions 
 	diferents dades contínues, hi ha dues formes que destaquen: fer la divisió per centils o realitzar-la
@@ -35,19 +36,19 @@ diferents arguments que es poden passar són:
 	és exacta, un conjunt podria tenir menys valors, és a dir, si es divideix entre quatre conjunts un
 	conjunt de 13 valors, llavors un d'aquests inevitablement tindrà un valor de més.}. Però, dividir-la
 	així pot deixar en un mateix rang valors forans i valors normals, és a dir, si es dividís en dos
-	grups la llista [2, 3, 4, 2000], 4 i 2000 aniran al mateix grup quan aparentment tenen poc sentit
-	que ho siguin. Amb aquest paràmetre permetem en executar l'script, canviar la funció de tall
-	d'un tall per rangs amb la mateixa mida als creats a partir de quartils.
+	grups la llista [2, 3, 4, 2000], 4 i 2000 aniran al mateix grup quan aparentment té poc sentit
+	que ho siguin. Amb aquest paràmetre permetem en executar l'script, canviar la funció de tall 
+	desde d'un tall per rangs amb la mateixa mida, als creats a partir de quartils.
 	\item \texttt{name}: permet canviar el nom de la relació amb què es guarda. S'ha d'especificar
 	en el paràmetre: \verb|python3 -m src ... -n notmydataset|.
 	\item \texttt{seed}: permet canviar la llavor en la qual s'agafen els valors per a fer els dos
-	datasets (train i test). Si no s'especifica, s'agafa el valor per defecte dels últims 5 dígits d'un
-	dels autors de la pràctica, com s'especificava a l'enunciat.
+	datasets (\textit{train} i \textit{test}). Si no s'especifica, s'agafa el valor per defecte 
+	dels últims 5 dígits d'un dels autors de la pràctica, com s'especificava a l'enunciat.
 \end{itemize}
  Dins d'aquest codi s'utilitzen dos funcions:
  \begin{itemize}
- 	\item \texttt{ArgumentParser}: constructor de la classe. Ens permet crear un parser on l'hi
- 	podem atribuir una descripció que s'utilitzarà amb el paràmetre \textit{help} opcional.
+ 	\item \texttt{ArgumentParser}: constructor de la classe. Ens permet crear un parser on es 
+ 	pot atribuir una descripció que s'utilitzarà amb el paràmetre \textit{help} opcional.
  	
  	\item \verb|add_argument|: ens permet afegir un argument. Si comença amb el caràcter
  	'-', serà opcional, i es podrà especificar un nom verbós, com per exemple \texttt{-n} i
@@ -63,7 +64,7 @@ diferents arguments que es poden passar són:
  			
  			\item \texttt{help}: proporciona un text d'ajuda quan es realitza la comanda \texttt{--help}.
  			
- 			\item \texttt{dest}: variable amb la que serà guardada en el parseig.
+ 			\item \texttt{dest}: variable amb la qual serà guardada en el parseig.
  			
  			\item \texttt{action}: especifica una acció per a realitzar. Només s'ha utilitzat per a 
  			guardar una constant \textit{'store\_const'}.
@@ -74,10 +75,10 @@ diferents arguments que es poden passar són:
  		\end{itemize}
  \end{itemize}
 \subsection{Weka i pandas}
-	Per a realitzar la funció de parseig s'ha utilitzat pandas. Per a fer-ho, s'ha utilitzat la funció
+	Per a realitzar la funció de parseig s'ha utilitzat \texttt{pandas}. Per a fer-ho, s'ha usat la funció
 	\verb|read_csv|.  A partir d'aquí, la manipulació de dades s'ha realitzat amb conjunció amb 
-	numpy. Així doncs, per a realitzar la discretització de les dades contínues, s'ha utilitzat les
-	funcions\footnote{L'explicacació de les funcions es pot trobar a la secció \ref{sec:partition}.} \texttt{qcut} i \texttt{cut}. Aquestes dues funcions
+	\texttt{numpy}. Així doncs, per a realitzar la discretització de les dades contínues, s'ha utilitzat les
+	funcions\footnote{L'explicació de les funcions es pot trobar a la secció \ref{sec:partition}.} \texttt{qcut} i \texttt{cut}. Aquestes dues funcions
 	accepten els mateixos paràmetres, perquè el canvi es pot realitzar fluidament. A més a més
 	per a fer el canvi d'una columna continua, es pot realitzar amb:
 	\verb|df[column_name] = cut_func(df[column], number_divisions, labels=False)|. 
