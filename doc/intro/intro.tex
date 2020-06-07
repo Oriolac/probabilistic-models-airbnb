@@ -6,5 +6,28 @@ Els objectius principals que s'han volgut assolir, han sigut bàsicament tres: p
 	\item Naive Bayes sent la variable independent \texttt{overall\_satisfaction} i amb $u=0$.
 	\item Naive Bayes amb la mateixa variable independent que la classe 2, però sent $u=3$.
 \end{enumerate}
-D'aquests, s'havien de veure el millor de 10 exemples\footnote{En cas que es puguin tenir més de 10. En el cas de la classe 2, no es poden realitzar 10 exemples, ja que és cas únic.}, i, finalment, l'explicació de com s'han escollit els conjunts discrets de valors per a transformar els atributs d'entrada en valors reals. 
+D'aquests, s'havien de veure el millor de 10 exemples\footnote{En cas que es puguin tenir més de 10. En el cas de la classe 2, no es poden realitzar 10 exemples, ja que és cas únic.}, i, finalment, l'explicació de com s'han escollit els conjunts discrets de valors per a transformar els atributs d'entrada en valors reals.\\
+\\
+Per a executar el programa es necessari tenir \texttt{python3} al sistema. Si es té,
+s'ha de realitzar les següents comandes al terminal en bash:
+\begin{lstlisting}[language=bash]
+python3 -m venv venv
+source venv/bin/activate
+python3 -m pip install -r requirements.txt
+\end{lstlisting}
+La primera comanda crea un \textit{entorn virtual} perquè les llibreries s'instal·lin en l'àmbit de projecte. D'aquesta
+forma, per eliminar-les només caldrà eliminar la carpeta. La segona ordre en el terminal 
+indica que s'utilitzi el l'entorn virtual, i la tercera instal·la els requeriments que s'han 
+utilitzat (són els requeriments de la llibreria \texttt{panda}. Finalment per a executar el fitxer
+de parseig, s'ha d'executar mitjançant:
+\begin{verbatim}
+	python3 -m src <input-file> <train-file> <test-file>
+\end{verbatim}
+El parser accepta més paràmetres opcionals, com per exemple, per a canviar la llavor utilitzada,
+que són discutits en el següent apartat. De tota manera, és pot executar la següent comanda per
+a saber que realitza cada un dels paràmetres opcionals:
+\begin{verbatim}
+	python3 -m src --help
+\end{verbatim}
+
 \end{document}
