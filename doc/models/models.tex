@@ -1,7 +1,7 @@
 \begin{document}
 	%TODO:  La puntuación log(UPSM) y el error de clasificación obtenido en todos los modelos para cada una de las tres clases de modelos.
 	% TODO: El mejor modelo seleccionado de cada clase y su justificación de porque es el mejor. Mostrar también el dibujo de la red bayesiana para cada uno de estos tres modelos (incluso para el caso de la red bayesiana naive). Recordar que weka te permite visualizar la red bayesiana del modelo aprendido.
-	En aquest apartat, podem veure els valors de la puntuació log(UPSM) i el percentatge d'error de classificació obtinguts en els diferents models de cadascuna de les classes de models. 
+	En aquest apartat, es pot veure els valors, tant de la puntuació $\log(UPSM)$ com el percentatge d'error de la classificació, obtinguts en els diferents models de cadascuna de les classes de models. 
 	\subsection{Models de la classe 1}
 	\begin{enumerate}
 		\item \textbf{log(UPSM):} -92608.96126554035 \textbf{Error de classificació:} 48.4167 \%
@@ -17,9 +17,13 @@
 	\end{enumerate}
 	\vspace{0.5cm}
 	Per a poder seleccionar el millor model dels anteriors, ens hem de fixar sobretot en quin d'ells ens classifica correctament un major nombre d'instàncies i, per tant, vaga la redundància, quin model té el menor percentatge d'error de classificació.\\
-	Com podem observar, tots els models tenen el mateix percentatge d'error excepte un, el qual podem descartar directament, ja que és més alt que la resta. Entre els altres models, no ens sorpèn que el percentatge no variï, ja que observant les dades que se'ns donaven inicialment i després de separar-les en els conjunts d'aprenentatge i testing, veiem una tendència d'un 50\% de casos en els quals el valor del overall\_satisfaction és de 4.5.\\\\
-	Per tant, veient totes les dades, podem arribar a la conclusió que ens podriem trobar en una situació d'"empat". Una manera de resoldre'l, i la que utilitzarem, serà comparar els valros del log(UPSM) de cada model.\\
-	Per concloure, considerarem que, el millor model d'entre els que tenen el mateix i millor percentatge en aquesta classe, serà aquell que tingui un UPSM socre més elevat, es a dir, el model que el seu log(UPSM) sigui més baix. Per tant, considerarem com a millor model de la classe 1, el classificat amb el nombre 5, del qual es pot observar la seva representació gràfica a la Figura \ref{fig:model1}.
+	\\
+	Com es pot observar, tots els models tenen el mateix percentatge d'error excepte un, el qual es pot descartar directament, ja que és més alt que la resta. Entre els altres models, no es sorprenent que el percentatge no variï, ja que es pot observar en les dades tan inicials com després de separar-les en els conjunts d'aprenentatge i de prova,  la tendència d'un 50\% de casos en els quals el valor d'\verb|overall_satisfaction| és de 4.5.\\
+	\\
+	Per tant, veient aquestes dades, s'arriba a la conclusió que es troben en una situació d'"empat". Una manera de resoldre'l, i la qual s'ha usat, és comparar els valors del $\log(UPSM)$ de cada model.
+	\\
+	\\
+	Per concloure, es considera que, el millor model d'entre els que tenen el millor percentatge en aquesta classe, serà aquell que tingui un \textit{UPSM score} més elevat, és a dir, el model que el seu $\log(UPSM)$ sigui més alt\footnote{Com que els valors es troben en negatiu, el valor més gran és el que té el valor absolut més petit.}. Per tant, considerarem com a millor model de la classe 1, el classificat amb el nombre 5, del qual es pot observar la seva representació gràfica a la Figura \ref{fig:model1}.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=12cm]{imgs/modelclasse1.png}
@@ -33,7 +37,8 @@
 		\item \textbf{log(UPSM):} -117515.15847723951 \textbf{Error de classificació:} 48.4484 \%
 	\end{enumerate}
 	\vspace{0.5cm}
-	En el cas de la segona classe, només hi trobem un model possible, per tant, serà aquest ek qual considerarem com a millor. El fet que només n'hi hagi un de possible és degut a que aquest model és el corresponent a la xarxa bayesiana naive, tenint com a variable de classe overall\_satisfaction, el qual és un model únic.\\
+	En el cas de la segona classe, només hi trobem un model possible, per tant, serà aquest és el que es considera millor. El fet que només n'hi hagi un de possible és degut al fet que aquest model és el corresponent a la xarxa bayesiana \textit{naive}, tenint com a variable de classe \verb|overall_satisfaction|, el qual és un model únic.\\
+	\\
 	A la figura \ref{fig:model2} es pot veure la representació gràfica d'aquest model.
 	\vspace{0.3cm}
 	\begin{figure}[H]
@@ -57,8 +62,9 @@
 		\item \textbf{log(UPSM):} -96108.4925816474 \textbf{Error de classificació:} 48.3534 \%
 	\end{enumerate}
 	\vspace{0.5cm}
-	Per tal de poder escollir el millor model d'aquesta classe, s'ha fet de la mateixa manera que en la classe 1. Tot i això, en aquest cas sí que hem pogut veure més diversitat de percentatges d'error en els diferents models. I, per aquest motiu, no ha estat necessàri comparar les valors del UPSM.\\\\
-	Els percentatges son bastant semblant entre si, ja que el fet d'enceratr algunes variables més que un altre model, no implica un gran canvi en el percentateg d'encerts, degut a la gran quantitat d'instàncies que tenim en el test. Malgrat tot, hi ha hagut un model que ha encertat algunes instàncies més que la resta. Per tant, considerem com a millor model de la classe 3, el classificat amb el nombre 8, del qual es pot observar la seva representació gràfica a la Figura \ref{fig:model3}.
+	Per tal de poder escollir el millor model d'aquesta classe, s'ha fet de la mateixa manera que en la classe 1. Tot i això, en aquest cas sí que s'ha pogut veure més diversitat de percentatges d'error en els diferents models. Per aquest motiu, no ha estat necessari comparar els valors de l' \textit{UPSM}.\\
+	\\
+	Els percentatges són bastant semblants entre si, ja que el fet d'encertar algunes variables més que un altre model, no implica un gran canvi en el percentatge d'encerts, a causa de la gran quantitat d'instàncies que tenim en el test. Malgrat tot, hi ha un model que ha encertat algunes instàncies més que la resta. Per tant, considerem com a millor model de la classe 3, classificat amb el nombre 8, del qual es pot observar la seva representació gràfica a la Figura \ref{fig:model3}.
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=15cm]{imgs/modelclasse3.png}
