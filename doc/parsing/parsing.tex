@@ -7,6 +7,8 @@
 % df[column_name] = pd.qcut(df[columnname], q=4, labels=False)
 % utilitzem sample i drop per a crear els dos datasets 
 %% Les dues funcions pandas.cut i pandas.qcut
+Per tal de mantenir un fluxe de treball correcte i estable, requerit per ser un treball col·laboratiu, s'ha realitzat una estructura modular.\\
+\\
 El parseig de les dades es realitza en dos fitxers continguts en \texttt{src}:
 \begin{itemize}
 	\item \verb|__main__.py| conte la funció \texttt{main} i funcions de parseig dels
@@ -74,9 +76,6 @@ diferents arguments que es poden passar són:
  			la funció a utilitzar pel tall.
  		\end{itemize}
  \end{itemize}
-A l'hora de crear els diferents archius ARFF pel training set i 
-
-
 \subsection{Weka i pandas}
 	Per a realitzar la funció de parseig s'ha utilitzat \texttt{pandas}. Per a fer-ho, s'ha usat la funció
 	\verb|read_csv|.  A partir d'aquí, la manipulació de dades s'ha realitzat amb conjunció amb 
