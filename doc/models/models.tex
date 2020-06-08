@@ -18,12 +18,20 @@
 	\vspace{0.5cm}
 	Per a poder seleccionar el millor model dels anteriors, ens hem de fixar sobretot en quin d'ells ens classifica correctament un major nombre d'instàncies i, per tant, vaga la redundància, quin model té el menor percentatge d'error de classificació.\\
 	\\
-	Com es pot observar, tots els models tenen el mateix percentatge d'error excepte un, el qual es pot descartar directament, ja que és més alt que la resta. Entre els altres models, no es sorprenent que el percentatge no variï, ja que es pot observar en les dades tan inicials com després de separar-les en els conjunts d'aprenentatge i de prova,  la tendència d'un 50\% de casos en els quals el valor d'\verb|overall_satisfaction| és de 4.5.\\
-	\\
-	Per tant, veient aquestes dades, s'arriba a la conclusió que es troben en una situació d'"empat". Una manera de resoldre'l, i la qual s'ha usat, és comparar els valors del $\log(UPSM)$ de cada model.
+	Com es pot observar, tots els models tenen el mateix percentatge d'error excepte un, el qual es pot descartar directament, ja que és més alt que la resta. Entre els altres models, no es sorprenent que el percentatge no variï, ja que es pot observar en les dades tan inicials com després de separar-les en els conjunts d'aprenentatge i de prova,  la tendència d'un 50\% de casos en els quals el valor d'\verb|overall_satisfaction| és de 4.5.
+	Això és a causa de dos factors principals:
+	\begin{itemize}
+		\item La seed, estipulada a l'hora de partir en dos el dataset, no genera una partició totalment desigual de l'altra. En altres paraules, el contingut de les dades en els dos datasets (tant en l'entrenament, com en l'evaluació) estan ben repartits, no segreguen casos únics i especials i gràcies a això no s'ha produït overfitting, ja que, en cas de tenir casos molt especials en l'avaluació, o en el training set, es tindria un error de classificació més alt.
+		\item Més de 6000 casos del dataset total (contant entrenament i evaluació), el seu \texttt{overall\_satisfaction} és 4.5. Clarament, això afavorirà a la xarxa de bayesiana de predir 4.5 per sobre d'altres puntuacions. Si l'entrenament i el test fossin desiguals \footnote{La desigualtat es pot arribar a comprovar amb el coeficient de gini, per exemple.}, no es podria afirmar aquest raonament.
+	\end{itemize}
+Com que aquests factors no depenen en com està fet la xarxa en sí, sinó en el dataset, el resultat serà comú en els tres possibles tipus de xarxa bayesiana.
+\\
+\
+	Per saber quin model és millor de l'actual classe, veient les dades proporcionades per Weka, s'arriba a la conclusió que els models es troben en una situació d'"empat". Una manera de resoldre'l, i la qual s'ha usat, és comparar els valors del $\log(UPSM)$ de cada model.
 	\\
 	\\
 	Per concloure, es considera que, el millor model d'entre els que tenen el millor percentatge en aquesta classe, serà aquell que tingui un \textit{UPSM score} més elevat, és a dir, el model que el seu $\log(UPSM)$ sigui més alt\footnote{Com que els valors es troben en negatiu, el valor més gran és el que té el valor absolut més petit.}. Per tant, considerarem com a millor model de la classe 1, el classificat amb el nombre 5, del qual es pot observar la seva representació gràfica a la Figura \ref{fig:model1}.
+	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=12cm]{imgs/modelclasse1.png}
