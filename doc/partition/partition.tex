@@ -8,30 +8,31 @@
 % reviews -> cut, num_quart: 10 
 % latitude -> cut,numQ : 20
 % longitude -> cut,numQ : 20
-Per tal de passar els atributs amb valors continus a  discrets, s'ha utilitzat la llibreria \texttt{pandas}, que ens permet llegir el \texttt{csv} d'una manera molt còmode i partir-lo de diferents maneres. Les funcions que s'han incorporat al nostre script de parseig són:
+Per tal de passar els atributs de valors continus a discrets, s'ha utilitzat la llibreria \texttt{pandas}, que ens permet llegir el \texttt{csv} d'una manera molt còmoda i partir-lo de diferents maneres. Les funcions que s'han incorporat al nostre script de parseig són:
 \begin{itemize}
-	\item \texttt{cut}. Divideix el dataset en diferents intervals utilitzant el rang de valors.
-	\item \texttt{qcut}. Divideix el dataset mitjançant quantils, és a dir, tots els intervals tindran el mateix nombre de dades.
+	\item \texttt{cut}: divideix el dataset en diferents intervals utilitzant el rang de valors.
+	\item \texttt{qcut}: divideix el dataset mitjançant quantils, és a dir, tots els intervals tindran el mateix nombre de dades.
 \end{itemize}
-A més a més, es va pensar en un primer moment utilitzar \texttt{KMeans} per tal d'agrupar la longitud i la latitud en un sol atribut. No obstant això, els atributs no han de tenir correlació directa. Weka ja ho realitzarà per nosaltres mitjançant models probabilístics. Per tant, es va declinar utilitzar aquesta opció.
+A més a més, en un primer moment es va pensar en utilitzar \texttt{KMeans} per tal d'agrupar la longitud i la latitud en un sol atribut. No obstant això, els atributs no han de tenir correlació directa. Weka ja ho realitzarà per nosaltres mitjançant models probabilístics. Per tant, es va declinar utilitzar aquesta opció.
 \\\\
-Per tal d'arribar a la conclusió de quin mètode era el millor per tal de categoritzar els atributs, s'ha utilitzat la llibreria \texttt{matplotlib} per a visualitzar les dades de manera gràfica. S'ha realitzat un gràfic\footnote{Els gràfics poden trobar a la secció \ref{app:grafics} de l'apèndix.} per cada atribut a categoritzar sobre l'\textit{overall\_satisfaction} i després s'ha realitzat altre cop el gràfic havent-lo categoritzat. Aquest procediment s'ha repetit fins a trobar una partició que fos més representativa.
+Per tal d'arribar a la conclusió de quin mètode era el millor a l'hora de categoritzar els atributs, s'ha utilitzat la llibreria \texttt{matplotlib} per a visualitzar les dades de manera gràfica. S'ha realitzat un gràfic\footnote{Els gràfics poden trobar a la secció \ref{app:grafics} de l'apèndix.} per a cada atribut a categoritzar sobre l'\textit{overall\_satisfaction} i, després, s'ha realitzat altre cop el gràfic havent-lo categoritzat. Aquest procediment s'ha repetit fins a trobar una partició que fos més representativa.
 \\
 \\
 El mètode de cada atribut realitzat es pot veure a la Taula \ref{tab:part}. Com es pot observar, el millor mètode per tal de preservar el comportament de la variable continua és utilitzant \texttt{cut}.
 \begin{table}[H]
 	\centering
-\begin{tabular}{ccc}
-	Atribut &Mètode & Num. Divisions\\\hline
-	price & cut & 15 \\
-	reviews & cut & 10 \\
-	latitude & cut & 20 \\
-	longitude & cut & 20 \\
-\end{tabular}
-\caption{Mètodes de partició utilitzats segons cada atribut}
-\label{tab:part}
+	\begin{tabular}{ccc}
+		Atribut &Mètode & Num. Divisions\\\hline
+		price & cut & 15 \\
+		reviews & cut & 10 \\
+		latitude & cut & 20 \\
+		longitude & cut & 20 \\
+	\end{tabular}
+	\caption{Mètodes de partició utilitzats segons cada atribut}
+	\label{tab:part}
 \end{table}
-Per tant, a l'hora de crear els diferents arxius ARFF pel training set i test set, la comanda emprada ha estat:
+Per tant, a l'hora de crear els diferents arxius ARFF pel training set i test set, la comanda emprada ha estat:\\
+
 \texttt{
 python3 -m src barca.csv trainset.arff testset.arff -pri 15 -rev 10 -lat 20 -lon 20
 }

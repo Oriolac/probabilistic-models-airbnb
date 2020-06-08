@@ -6,7 +6,7 @@ Els objectius principals que s'han volgut assolir, han sigut bàsicament tres: p
 	\item Naive Bayes sent la variable independent \texttt{overall\_satisfaction} i amb $u=0$.
 	\item Naive Bayes amb la mateixa variable independent que la classe 2, però sent $u=3$.
 \end{enumerate}
-D'aquests, s'havien de veure el millor de 10 exemples\footnote{En cas que es puguin tenir més de 10. En el cas de la classe 2, no es poden realitzar 10 exemples, ja que és cas únic.}, i, finalment, l'explicació de com s'han escollit els conjunts discrets de valors per a transformar els atributs d'entrada en valors reals.\\
+D'aquests, s'havia de veure quin dels 10 models de cada classe era millor\footnote{En cas que es puguin tenir 10 mdoels, ja que en el cas de la classe 2 això no era possible degut a que, ab aquesta configuració, només existeix un únic model.}. I, finalment, l'últim objectiu consistia en l'explicació de com s'han escollit els conjunts discrets de valors per a transformar els atributs d'entrada en valors reals.\\
 \\
 Per a executar el programa es necessari tenir \texttt{python3} al sistema. Si es té,
 s'ha de realitzar les següents comandes al terminal en bash:
@@ -17,9 +17,9 @@ python3 -m pip install -r requirements.txt
 \end{lstlisting}
 La primera comanda crea un \textit{entorn virtual} perquè les llibreries s'instal·lin en l'àmbit de projecte. D'aquesta
 forma, per eliminar-les només caldrà eliminar la carpeta. La segona ordre en el terminal 
-indica que s'utilitzi el l'entorn virtual, i la tercera instal·la els requeriments que s'han 
-utilitzat (són els requeriments de la llibreria \texttt{panda}. Finalment per a executar el fitxer
-de parseig, s'ha d'executar mitjançant:
+indica que s'utilitzi l'entorn virtual i, la tercera, instal·la els requeriments que s'han 
+utilitzat (són els requeriments de la llibreria \texttt{panda}). Finalment, per a executar el fitxer
+de parseig, s'ha d'executar mitjançant la comanda següent\footnote{Aquest és la comanda general, en el nostre cas, la comanda correcta que s'ha d'executar es troba escrita al final de l'apartat 2 d'aquest document.}:
 \begin{verbatim}
 	python3 -m src <input-file> <train-file> <test-file>
 \end{verbatim}
